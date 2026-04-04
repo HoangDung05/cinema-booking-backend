@@ -1,1 +1,1 @@
-# cinema-booking-backend
+# cinema_ticket_booking_backend

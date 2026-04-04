@@ -1,0 +1,48 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /api  # Tiền tố cho tất cả API (ví dụ: /api/movies)
+
+spring:
+  application:
+    name: movie-booking
+
+  # Cấu hình Kết nối MySQL
+  datasource:
+    url: jdbc:mysql://localhost:3306/cinema_booking?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: root          # Thay bằng username MySQL của bạn
+    password: "root" # Thay bằng mật khẩu MySQL của bạn
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  # Cấu hình Hibernate / JPA (Spring Boot 4 tối ưu hóa Hibernate 6+)
+  jpa:
+    hibernate:
+      ddl-auto: update      # Tự động tạo/cập nhật bảng từ Java Entity
+    show-sql: true          # In câu lệnh SQL ra console
+    properties:
+      hibernate:
+        format_sql: true    # Định dạng SQL cho dễ đọc
+        highlight_sql: true # Tô màu cú pháp SQL trong console (Tính năng mới)
+        dialect: org.hibernate.dialect.MySQLDialect
+
+  # Giới hạn kích thước file upload (Poster phim, ảnh user)
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  web:
+    error:
+      include-message: always
+
+# Cấu hình bảo mật JWT (Tham số tự định nghĩa để dùng trong code)
+
+#  jwt:
+#  secret: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+#  expiration: 86400000      # 1 ngày (ms)
+
+# Cấu hình Logging để theo dõi luồng dữ liệu
+logging:
+  level:
+    root: INFO
+    com.cinema: DEBUG      # Hiển thị log chi tiết của các gói tin trong dự án
+    org.hibernate.orm.results: DEBUG # Log chi tiết kết quả trả về từ DB

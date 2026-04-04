@@ -1,0 +1,1 @@
+﻿{"timestamp":"2026-04-01T01:28:47.883Z","status":500,"error":"Internal Server Error","message":"io/jsonwebtoken/security/SecureRequest","path":"/api/auth/login"}

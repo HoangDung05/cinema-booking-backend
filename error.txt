@@ -1,0 +1,53 @@
+﻿
+> Error starting 
+ApplicationContext. To 
+display the condition 
+evaluation report re-run 
+your application with 
+'debug' enabled.
+  2026-04-01T08:26:43.802+
+07:00 ERROR 19416 --- 
+[movie-booking] [         
+  main] o.s.b.d.LoggingFai
+lureAnalysisReporter   : 
+  
+  ************************
+***
+  APPLICATION FAILED TO 
+START
+  ************************
+***
+  
+  Description:
+  
+  Web server failed to 
+start. Port 8080 was 
+already in use.
+  
+  Action:
+  
+  Identify and stop the 
+process that's listening 
+on port 8080 or configure 
+this application to 
+listen on another port.
+  
+  [INFO] -----------------
+--------------------------
+--------------------------
+---
+  [INFO] BUILD FAILURE
+  [INFO] -----------------
+--------------------------
+--------------------------
+---
+  [INFO] Total time:  
+16.793 s
+  [INFO] Finished at: 
+2026-04-01T08:26:43+07:00
+  [INFO] -----------------
+--------------------------
+--------------------------
+---
+
+

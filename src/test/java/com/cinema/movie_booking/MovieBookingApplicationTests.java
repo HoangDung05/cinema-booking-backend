@@ -1,10 +1,10 @@
-package com.cinema.cinema_backend;
+package com.cinema.movie_booking;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CinemaBackendApplicationTests {
+class MovieBookingApplicationTests {
 
 	@Test
 	void contextLoads() {
