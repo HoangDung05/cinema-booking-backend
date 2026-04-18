@@ -17,4 +17,12 @@ public interface MovieService {
     void deleteMovie(Integer id);
 
     List<Movie> filterMovies(LocalDate date, MovieStatus status);
+
+    List<Movie> getNowShowingMovies();
+
+    List<Movie> getComingSoonMovies();
+
+    List<Movie> searchMovies(String keyword);
+
+    List<Movie> filterMovies(LocalDate date);
 }

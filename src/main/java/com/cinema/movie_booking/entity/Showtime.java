@@ -18,22 +18,17 @@ public class Showtime {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    // DATETIME trong SQL map với LocalDateTime trong Java
-    @Column(name = "start_time", nullable = false)
-    private LocalDateTime startTime;
-
-    @Column(name = "end_time", nullable = false)
-    private LocalDateTime endTime;
-
-    // DECIMAL(10, 2) map với BigDecimal để tính tiền chính xác
-    @Column(name = "price", nullable = false)
-    private BigDecimal price;
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "movie_id", nullable = false)
     private Movie movie;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "room_id", nullable = false)
     private Room room;
+
+    @Column(name = "start_time", nullable = false)
+    private LocalDateTime startTime;
+
+    @Column(name = "price", nullable = false)
+    private BigDecimal price;
 }

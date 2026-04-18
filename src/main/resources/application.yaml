@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8080
   servlet:
     context-path: /api  # Tiền tố cho tất cả API (ví dụ: /api/movies)
 
@@ -9,8 +9,9 @@ spring:
 
   # Cấu hình Kết nối MySQL
   datasource:
-    url: jdbc:mysql://localhost:3306/cinema_booking?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
-    username: root          # Thay bằng username MySQL của bạn
+    # Giờ suất chiếu trong DB là giờ địa phương (VN). UTC khiến JDBC/ TIMESTAMP lệch so với Workbench.
+    url: jdbc:mysql://localhost:3306/cinema_booking?useSSL=false&serverTimezone=Asia/Ho_Chi_Minh&allowPublicKeyRetrieval=true
+    username: root         # Thay bằng username MySQL của bạn
     password: "root" # Thay bằng mật khẩu MySQL của bạn
     driver-class-name: com.mysql.cj.jdbc.Driver
 
@@ -46,3 +47,10 @@ logging:
     root: INFO
     com.cinema: DEBUG      # Hiển thị log chi tiết của các gói tin trong dự án
     org.hibernate.orm.results: DEBUG # Log chi tiết kết quả trả về từ DB
+
+# Cấu hình Swagger / SpringDoc
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html   # Đường dẫn tắt, sẽ redirect đến index.html
+  api-docs:
+    path: /v3/api-docs

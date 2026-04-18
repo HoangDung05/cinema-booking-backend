@@ -7,6 +7,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -22,6 +23,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         // Tìm User trong Database theo Email
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Không tìm thấy user với email: " + email));
+
+        // Chặn đăng nhập/xác thực nếu tài khoản đã bị khóa
+        String status = user.getStatus() == null ? "ACTIVE" : user.getStatus().trim().toUpperCase();
+        if ("LOCKED".equals(status)) {
+            throw new LockedException("Tài khoản đã bị khóa.");
+        }
 
         // Chuyển đổi Role của bạn thành GrantedAuthority của Spring Security
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + user.getRole().getName());
