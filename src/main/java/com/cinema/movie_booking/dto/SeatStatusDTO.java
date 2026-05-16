@@ -11,5 +11,5 @@ public class SeatStatusDTO {
     private Integer id;
     private String seatNumber;
     private String seatType; // "STANDARD" or "VIP" based on naming convention
-    private boolean booked;  // true = đã có người đặt, false = còn trống
+    private String status;  // "AVAILABLE", "HOLDING", "BOOKED"
 }

@@ -17,7 +17,7 @@ public class BookingController {
 
     private final BookingService bookingService;
 
-    // API 3: POST /api/bookings/calculate-price
+    // API 1: POST /api/bookings/calculate-price
     // Tính giá nháp (kèm voucher) KHÔNG lưu DB – dùng để hiển thị tóm tắt trước khi thanh toán
     @PostMapping("/calculate-price")
     public ResponseEntity<?> calculatePrice(@RequestBody PriceCalculateRequest request) {
@@ -29,7 +29,7 @@ public class BookingController {
         }
     }
 
-    // API 4: POST /api/bookings/hold
+    // API 2: POST /api/bookings/hold
     // Nhận chỗ: lưu DB trạng thái PENDING, khóa ghế
     @PostMapping("/hold")
     public ResponseEntity<?> holdBooking(@RequestBody BookingRequest request) {
@@ -41,7 +41,7 @@ public class BookingController {
         }
     }
 
-    // API 4.5: POST /api/bookings/{id}/pay
+    // API 3: POST /api/bookings/{id}/pay
     // Thanh toán: xác nhận thẻ/momo, áp dụng voucher, đổi PENDING -> PAID
     @PostMapping("/{id}/pay")
     public ResponseEntity<?> payBooking(@PathVariable Integer id, @RequestBody PayBookingRequest request) {
@@ -53,7 +53,17 @@ public class BookingController {
         }
     }
 
-    // API 5: GET /api/bookings/{id}
+    @PostMapping("/{id}/confirm")
+    public ResponseEntity<?> confirmBooking(@PathVariable Integer id) {
+        try {
+            BookingResponse response = bookingService.confirmBooking(id);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    // API 4: GET /api/bookings/{id}
     // Xem chi tiết hóa đơn
     @GetMapping("/{id}")
     public ResponseEntity<?> getBookingDetails(@PathVariable Integer id) {

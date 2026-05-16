@@ -23,7 +23,7 @@ public class Booking {
     private BigDecimal totalPrice;
 
     // Enum trong SQL có thể map thẳng ra String trong Java
-    @Column(name = "status", columnDefinition = "ENUM('PENDING', 'PAID', 'CANCELLED')")
+    @Column(name = "status", columnDefinition = "ENUM('PENDING', 'AWAITING_CONFIRMATION', 'PAID', 'CANCELLED')")
     private String status = "PENDING"; // Default value
 
     /** Ghi nhận thời điểm tạo đơn — dùng cho hết hạn PENDING (2 phút) và đếm ngược trên client */
@@ -37,8 +37,11 @@ public class Booking {
         }
     }
 
+    @Column(name = "guest_email")
+    private String guestEmail;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = true)
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)

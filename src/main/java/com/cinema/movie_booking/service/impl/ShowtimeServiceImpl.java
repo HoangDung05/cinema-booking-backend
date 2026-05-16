@@ -74,16 +74,29 @@ public class ShowtimeServiceImpl implements ShowtimeService {
             allSeats = seedDefaultSeats(showtime.getRoom());
         }
 
-        List<Integer> bookedSeatIds = bookingDetailRepository.findBookedSeatIdsByShowtimeId(showtimeId);
-        Set<Integer> bookedSet = Set.copyOf(bookedSeatIds);
+        List<com.cinema.movie_booking.entity.BookingDetail> bookingDetails = bookingDetailRepository.findByShowtimeId(showtimeId);
+        java.util.Map<Integer, String> bookedSeatStatus = bookingDetails.stream()
+                .filter(bd -> !"CANCELLED".equals(bd.getBooking().getStatus()))
+                .collect(Collectors.toMap(
+                        bd -> bd.getSeat().getId(),
+                        bd -> bd.getBooking().getStatus(),
+                        (existing, replacement) -> replacement
+                ));
 
         return allSeats.stream().map(seat -> {
             String seatType = seat.getSeatNumber().startsWith("V") ? "VIP" : "STANDARD";
+            String bookingStatus = bookedSeatStatus.get(seat.getId());
+            String status = "AVAILABLE";
+            if ("PENDING".equals(bookingStatus) || "AWAITING_CONFIRMATION".equals(bookingStatus)) {
+                status = "HOLDING";
+            } else if ("PAID".equals(bookingStatus)) {
+                status = "BOOKED";
+            }
             return new SeatStatusDTO(
                     seat.getId(),
                     seat.getSeatNumber(),
                     seatType,
-                    bookedSet.contains(seat.getId())
+                    status
             );
         }).collect(Collectors.toList());
     }

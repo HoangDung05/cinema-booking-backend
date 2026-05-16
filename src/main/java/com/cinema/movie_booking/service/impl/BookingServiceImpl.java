@@ -101,8 +101,11 @@ public class BookingServiceImpl implements BookingService {
             throw new Exception("Danh sách ghế bị trùng. Vui lòng chọn lại ghế!");
         }
 
-        User user = userRepository.findById(request.getUserId())
-                .orElseThrow(() -> new Exception("Không tìm thấy người dùng!"));
+        User user = null;
+        if (request.getUserId() != null) {
+            user = userRepository.findById(request.getUserId())
+                    .orElseThrow(() -> new Exception("Không tìm thấy người dùng!"));
+        }
 
         Showtime showtime = showtimeRepository.findById(request.getShowtimeId())
                 .orElseThrow(() -> new Exception("Không tìm thấy suất chiếu!"));
@@ -194,7 +197,10 @@ public class BookingServiceImpl implements BookingService {
 
         BigDecimal finalTotal = subtotal.subtract(discountAmount).max(BigDecimal.ZERO);
         booking.setTotalPrice(finalTotal);
-        booking.setStatus("PAID");
+        if (request.getGuestEmail() != null && !request.getGuestEmail().isBlank()) {
+            booking.setGuestEmail(request.getGuestEmail());
+        }
+        booking.setStatus("AWAITING_CONFIRMATION");
         bookingRepository.save(booking);
 
         Payment payment = new Payment();
@@ -208,6 +214,25 @@ public class BookingServiceImpl implements BookingService {
                 booking.getId(),
                 "Thanh toán hoàn tất!",
                 finalTotal
+        );
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public BookingResponse confirmBooking(Integer bookingId) throws Exception {
+        Booking booking = bookingRepository.findById(bookingId)
+                .orElseThrow(() -> new Exception("Không tìm thấy đơn hàng ID: " + bookingId));
+
+        if (!"AWAITING_CONFIRMATION".equalsIgnoreCase(booking.getStatus())) {
+            throw new Exception("Đơn hàng này không ở trạng thái chờ xác nhận!");
+        }
+
+        booking.setStatus("PAID");
+        bookingRepository.save(booking);
+
+        return new BookingResponse(
+                booking.getId(),
+                "Xác nhận thanh toán thành công!",
+                booking.getTotalPrice()
         );
     }
 

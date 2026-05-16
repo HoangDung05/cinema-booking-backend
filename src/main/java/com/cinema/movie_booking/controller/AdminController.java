@@ -56,8 +56,8 @@ public class AdminController {
             for (Booking b : bookings) {
                 java.util.Map<String, Object> dto = new java.util.HashMap<>();
                 dto.put("bookingId", b.getId());
-                dto.put("userEmail", b.getUser() != null ? b.getUser().getEmail() : "—");
-                dto.put("userName", b.getUser() != null ? b.getUser().getFullName() : "—");
+                dto.put("userEmail", b.getUser() != null ? b.getUser().getEmail() : (b.getGuestEmail() != null ? b.getGuestEmail() : "Khách vãng lai"));
+                dto.put("userName", b.getUser() != null ? b.getUser().getFullName() : "Khách vãng lai");
                 dto.put("movieTitle", b.getShowtime() != null && b.getShowtime().getMovie() != null 
                     ? b.getShowtime().getMovie().getTitle() : "—");
                 dto.put("showtimeStart", b.getShowtime() != null ? b.getShowtime().getStartTime() : null);

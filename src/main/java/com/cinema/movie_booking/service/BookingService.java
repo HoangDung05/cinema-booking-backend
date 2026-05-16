@@ -22,6 +22,8 @@ public interface BookingService {
 
     BookingResponse payBooking(Integer bookingId, PayBookingRequest request) throws Exception;
 
+    BookingResponse confirmBooking(Integer bookingId) throws Exception;
+
     List<BookingHistoryDTO> getUserBookings(String email);
 
     Booking getBookingById(Integer id) throws Exception;

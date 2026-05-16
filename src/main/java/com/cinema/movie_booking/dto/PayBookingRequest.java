@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class PayBookingRequest {
     private String paymentMethod;
     private String voucherCode;
+    private String guestEmail;
 }
