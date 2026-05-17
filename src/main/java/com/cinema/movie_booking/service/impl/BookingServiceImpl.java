@@ -200,7 +200,12 @@ public class BookingServiceImpl implements BookingService {
         if (request.getGuestEmail() != null && !request.getGuestEmail().isBlank()) {
             booking.setGuestEmail(request.getGuestEmail());
         }
-        booking.setStatus("AWAITING_CONFIRMATION");
+
+        if (booking.getUser() != null) {
+            booking.setStatus("PAID");
+        } else {
+            booking.setStatus("AWAITING_CONFIRMATION");
+        }
         bookingRepository.save(booking);
 
         Payment payment = new Payment();

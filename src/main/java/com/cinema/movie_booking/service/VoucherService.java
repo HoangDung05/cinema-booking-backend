@@ -16,8 +16,4 @@ public interface VoucherService {
     Optional<Voucher> getByCode(String code);
 
     List<Voucher> getActiveVouchers();
-
-    List<com.cinema.movie_booking.entity.UserVoucher> getUserVouchers(String email);
-
-    com.cinema.movie_booking.entity.UserVoucher claimVoucher(String email, String code);
 }

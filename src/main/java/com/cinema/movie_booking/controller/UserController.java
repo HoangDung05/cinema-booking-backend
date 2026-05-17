@@ -60,7 +60,7 @@ public class UserController {
     @GetMapping("/me/vouchers")
     public ResponseEntity<?> getMyVouchers(@RequestParam String email) {
         try {
-            return ResponseEntity.ok(voucherService.getUserVouchers(email));
+            return ResponseEntity.ok(voucherService.getActiveVouchers());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

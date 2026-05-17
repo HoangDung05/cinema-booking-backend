@@ -18,6 +18,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>movie_booking</name>
     <description>Movie Booking Backend</description>
+    <packaging>war</packaging>
 
     <properties>
         <java.version>21</java.version>
@@ -29,6 +30,13 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- Tomcat for WAR deployment -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <!-- JPA -->
@@ -99,6 +107,7 @@
     </dependencies>
 
     <build>
+        <finalName>ROOT</finalName>
         <plugins>
 
             <!-- ✅ Compiler Java 21 -->

@@ -59,20 +59,4 @@ public class VoucherController {
         voucherService.deleteVoucher(id);
         return ResponseEntity.noContent().build();
     }
-
-    @PostMapping("/claim")
-    public ResponseEntity<?> claimVoucher(@RequestBody Map<String, String> payload) {
-        try {
-            String email = payload.get("email");
-            String code = payload.get("code");
-
-            if (email == null || code == null) {
-                return ResponseEntity.badRequest().body("Thiều thông tin email hoặc code");
-            }
-
-            return ResponseEntity.ok(voucherService.claimVoucher(email, code));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
 }
