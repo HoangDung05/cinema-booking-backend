@@ -184,6 +184,15 @@ public class ShowtimeServiceImpl implements ShowtimeService {
         LocalDateTime newStart = showtime.getStartTime();
         LocalDateTime newEnd = newStart.plusMinutes(movieDuration);
 
+        List<Showtime> sameMovieShowtimes = showtimeRepository.findByMovieId(movieId);
+        boolean sameMovieSameTime = sameMovieShowtimes.stream()
+                .filter(existing -> currentShowtimeId == null || !existing.getId().equals(currentShowtimeId))
+                .anyMatch(existing -> existing.getStartTime().equals(newStart));
+
+        if (sameMovieSameTime) {
+            throw new RuntimeException("Không thể tạo suất chiếu: Phim này đã có suất chiếu vào đúng khung giờ này (kể cả ở phòng khác).");
+        }
+
         List<Showtime> sameRoomShowtimes = showtimeRepository.findByRoomId(roomId);
         boolean hasOverlap = sameRoomShowtimes.stream()
                 .filter(existing -> currentShowtimeId == null || !existing.getId().equals(currentShowtimeId))
