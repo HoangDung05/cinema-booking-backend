@@ -61,6 +61,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/showtimes", "/showtimes/**").permitAll()    // Lịch chiếu (public)
                         .requestMatchers("/rooms/**").permitAll()                        // Phòng - tất cả methods (public)
                         .requestMatchers("/bookings/**").permitAll()                     // Đặt vé / Tính giá (public)
+                        .requestMatchers("/chat", "/chat/**").permitAll()                // Chatbot AI (public)
+                        .requestMatchers("/error").permitAll()                              // Spring error dispatch (public)
                         .requestMatchers("/admin/**").hasRole("ADMIN")                    // Quản lý khác (cần ADMIN)
                         .anyRequest().authenticated()
                 )
